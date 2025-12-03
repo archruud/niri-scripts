@@ -1,0 +1,139 @@
+/* Noctalia-shell inspirert styling */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free";
+    font-size: 13px;
+    font-weight: 600;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(26, 27, 38, 0.95);
+    color: #cdd6f4;
+    border-bottom: 2px solid rgba(137, 180, 250, 0.3);
+}
+
+/* Venstre side */
+#custom-launcher {
+    color: #89b4fa;
+    font-size: 20px;
+    padding: 0 15px;
+    margin: 0;
+}
+
+#custom-launcher:hover {
+    background: rgba(137, 180, 250, 0.2);
+}
+
+#workspaces {
+    margin: 0 5px;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    margin: 0 2px;
+    color: #6c7086;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+#workspaces button.active {
+    color: #89b4fa;
+    background: rgba(137, 180, 250, 0.15);
+    border-bottom: 2px solid #89b4fa;
+}
+
+#workspaces button:hover {
+    background: rgba(137, 180, 250, 0.1);
+    color: #89b4fa;
+}
+
+#window {
+    padding: 0 15px;
+    color: #cdd6f4;
+    font-weight: normal;
+}
+
+/* Senter */
+#clock {
+    padding: 0 20px;
+    color: #f5e0dc;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Høyre side */
+#pulseaudio,
+#bluetooth,
+#network,
+#battery {
+    padding: 0 12px;
+    margin: 0 2px;
+}
+
+#pulseaudio {
+    color: #f9e2af;
+}
+
+#pulseaudio.muted {
+    color: #6c7086;
+}
+
+#bluetooth {
+    color: #89b4fa;
+}
+
+#bluetooth.disabled {
+    color: #6c7086;
+}
+
+#network {
+    color: #a6e3a1;
+}
+
+#network.disconnected {
+    color: #6c7086;
+}
+
+#battery {
+    color: #94e2d5;
+}
+
+#battery.charging {
+    color: #a6e3a1;
+}
+
+#battery.warning:not(.charging) {
+    color: #f9e2af;
+}
+
+#battery.critical:not(.charging) {
+    color: #f38ba8;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    to {
+        opacity: 0.5;
+    }
+}
+
+/* Hover effekter */
+#pulseaudio:hover,
+#bluetooth:hover,
+#network:hover,
+#battery:hover {
+    background: rgba(137, 180, 250, 0.1);
+}
+
+/* Tooltip styling */
+tooltip {
+    background: rgba(26, 27, 38, 0.98);
+    border: 1px solid rgba(137, 180, 250, 0.3);
+    border-radius: 5px;
+}
+
+tooltip label {
+    color: #cdd6f4;
+}
