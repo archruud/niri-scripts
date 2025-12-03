@@ -1,0 +1,195 @@
+// Niri konfigurasjon - Tilpasset for Archruud
+// Basert på din Hyprland setup
+
+input {
+    keyboard {
+        xkb {
+            layout "no"
+        }
+    }
+    
+    touchpad {
+        tap
+        natural-scroll
+        accel-speed 0.2
+    }
+}
+
+// Monitor setup - samme som Hyprland
+output "eDP-1" {
+    mode "1920x1200@60"
+    position x=0 y=0
+    scale 1.0
+}
+
+// Layout innstillinger - inspirert av din Hyprland config
+layout {
+    gaps 16               // Hyprland: gaps_in=5, gaps_out=20 (kombinert)
+    center-focused-column "never"
+    
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    
+    default-column-width { proportion 0.5; }
+    
+    focus-ring {
+        width 2
+        active-color 51 204 255 238      // Din Hyprland active border
+        inactive-color 89 89 89 170      // Din Hyprland inactive border
+    }
+    
+    border {
+        width 2
+        active-color 51 204 255 238
+        inactive-color 89 89 89 170
+    }
+}
+
+// Autostart - samme som Hyprland
+spawn-at-startup "swww-daemon"
+spawn-at-startup "waybar" "--config" "~/.config/waybar-niri/config" "--style" "~/.config/waybar-niri/style.css"
+spawn-at-startup "dunst"
+spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
+spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
+
+prefer-no-csd
+
+// Environment variables
+environment {
+    XCURSOR_SIZE "24"
+    XDG_MENU_PREFIX "arch-"
+}
+
+cursor {
+    xcursor-theme "Adwaita"
+    xcursor-size 24
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  KEYBINDINGS - Tilpasset fra din Hyprland config
+// ═══════════════════════════════════════════════════════════════════════════
+
+binds {
+    // ─── GRUNNLEGGENDE ───
+    Mod+Return { spawn "kitty"; }                                    // Terminal
+    Mod+Q { close-window; }                                          // Lukk vindu
+    Mod+E { spawn "dolphin"; }                                       // File manager
+    Mod+A { spawn "bash" "-c" "killall rofi || ~/.config/rofi/launchers/type-2/launcher.sh"; }  // Rofi launcher
+    
+    // ─── DINE EGNE BINDINGS ───
+    Mod+B { spawn "firefox"; }                                       // Firefox
+    Mod+Z { spawn "zed" "~/"; }                                      // Zed editor
+    
+    // ─── SCREENSHOTS (dine fra Hyprland) ───
+    Mod+Shift+S { spawn "grim" "-g" "$(slurp)" "-" "|" "swappy" "-f" "-"; }           // Screenshot valgt område
+    Mod+Ctrl+S { spawn "sh" "-c" "grim - | swappy -f -"; }                            // Screenshot full screen
+    Mod+Alt+S { spawn "~/.config/hypr/scripts/screenshot-window.sh"; }                // Screenshot vindu
+    
+    // ─── CLIPBOARD & VERKTØY ───
+    Mod+V { spawn "bash" "-c" "cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy"; }  // Clipboard history
+    Mod+T { spawn "~/.config/rofi/show-time.sh"; }                   // Vis klokke
+    Mod+Shift+T { spawn "~/.config/rofi/show-calendar.sh"; }         // Vis kalender
+    Mod+P { spawn "~/.config/rofi/show-battery.sh"; }                // Vis batteri
+    Mod+K { spawn "~/.config/hypr/scripts/fuzzel-hyprpicker.sh"; }   // Color picker (fuzzel + hyprpicker)
+    
+    // ─── OVERVIEW (NIRI'S GENIALE FUNKSJON!) ───
+    // Dette erstatter QuickShell overview fra Hyprland
+    Ctrl+Tab { switch-preset-column-width; }                         // Endre column bredde
+    Mod+Tab { focus-workspace-down; }                                // Eller bruk custom overview
+    
+    // ─── FOKUS MELLOM VINDUER ───
+    Mod+Left { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Up { focus-window-up; }
+    Mod+Down { focus-window-down; }
+    
+    // ─── FLYTT VINDUER (Hyprland: Ctrl) ───
+    Mod+Ctrl+Left { move-column-left; }
+    Mod+Ctrl+Right { move-column-right; }
+    Mod+Ctrl+Up { move-window-up; }
+    Mod+Ctrl+Down { move-window-down; }
+    
+    // ─── RESIZE VINDUER (Hyprland: Shift) ───
+    Mod+Shift+Left { set-column-width "-10%"; }
+    Mod+Shift+Right { set-column-width "+10%"; }
+    Mod+Shift+Up { set-window-height "-10%"; }
+    Mod+Shift+Down { set-window-height "+10%"; }
+    
+    // ─── WORKSPACES 1-10 ───
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+0 { focus-workspace 10; }
+    
+    // ─── FLYTT TIL WORKSPACE ───
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Shift+0 { move-column-to-workspace 10; }
+    
+    // ─── MULTIMEDIA KEYS (samme som Hyprland) ───
+    XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+    XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+    XF86AudioMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86MonBrightnessUp { spawn "brightnessctl" "-e4" "-n2" "set" "5%+"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "-e4" "-n2" "set" "5%-"; }
+    
+    // ─── POWER ───
+    XF86PowerOff { spawn "wlogout"; }
+    Mod+L { spawn "hyprlock"; }
+    Mod+Shift+E { quit; }                                            // Avslutt niri
+    
+    // ─── EXTRA ───
+    Mod+R { spawn "bash" "-c" "killall waybar && waybar &"; }        // Restart Waybar
+    Mod+J { toggle-window-floating; }                                // Toggle floating
+    
+    // ─── SCREENSHOT (Print key) ───
+    Print { spawn "grim" "-g" "$(slurp)" "$(xdg-user-dir PICTURES)/screenshot-$(date +%Y%m%d-%H%M%S).png"; }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  WINDOW RULES
+// ═══════════════════════════════════════════════════════════════════════════
+
+window-rule {
+    match app-id="kitty"
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    match app-id="dolphin"
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    match app-id="firefox"
+    default-column-width { proportion 0.66667; }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  NIRI'S OVERVIEW FUNKSJON
+// ═══════════════════════════════════════════════════════════════════════════
+// 
+// Niri har innebygd workspace overview! Ingen behov for QuickShell.
+// Bruk Mod+Page_Up/Page_Down for å se alle workspaces
+// Eller konfigurer egen keybinding over
+//
+// Tips: Niri's scrolling tiling layout lar deg se alle vinduer samtidig
+//       når du scroller horisontalt - det er det geniale med niri!
+//
+// ═══════════════════════════════════════════════════════════════════════════
